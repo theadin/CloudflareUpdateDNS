@@ -1,5 +1,6 @@
 ﻿//Ignore Spelling:proxied
 using CloudflareUpdateDNS.Models;
+using Serilog;
 using System;
 using System;
 using System.Collections.Generic;
@@ -32,12 +33,12 @@ public static class Cloudflare
         if (response.IsSuccessStatusCode)
         {
             DNSRecordsResponse? responseBody = await response.Content.ReadFromJsonAsync<DNSRecordsResponse>();
-            Console.WriteLine(JsonSerializer.Serialize(responseBody));
+            Log.Information(JsonSerializer.Serialize(responseBody));
             return responseBody;
         }
         else
         {
-            Console.WriteLine($"Error: {response.StatusCode}");
+            Log.Information($"Error: {response.StatusCode}");
             return null;
         }
     }
@@ -52,12 +53,12 @@ public static class Cloudflare
         if (response.IsSuccessStatusCode)
         {
             GetDomainDetailsResponse? responseBody = await response.Content.ReadFromJsonAsync<GetDomainDetailsResponse>();
-            Console.WriteLine(JsonSerializer.Serialize(responseBody));
+            Log.Information(JsonSerializer.Serialize(responseBody));
             return responseBody;
         }
         else
         {
-            Console.WriteLine($"Error: {response.StatusCode}");
+            Log.Information($"Error: {response.StatusCode}");
             return null;
         }
     }
@@ -78,11 +79,11 @@ public static class Cloudflare
         {
             Cloudflare.IPInCloudflare = newIP;
             GetDomainDetailsResponse? responseBody = await response.Content.ReadFromJsonAsync<GetDomainDetailsResponse>();
-            Console.WriteLine(JsonSerializer.Serialize(responseBody));
+            Log.Information(JsonSerializer.Serialize(responseBody));
         }
         else
         {
-            Console.WriteLine($"Error: {response.StatusCode}");
+            Log.Information($"Error: {response.StatusCode}");
         }
     }
 

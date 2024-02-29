@@ -1,3 +1,5 @@
+using Serilog;
+
 namespace CloudflareUpdateDNS;
 
 public class Worker : BackgroundService
@@ -31,7 +33,7 @@ public class Worker : BackgroundService
 
 
             string currentIP = await GetPublicIPAddressAsync();
-            Console.WriteLine($"currentIP: {currentIP}");
+            Log.Information($"currentIP: {currentIP}");
 
             if (!Cloudflare.InitialCheck)
             {
